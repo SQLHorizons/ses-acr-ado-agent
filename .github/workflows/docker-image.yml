@@ -6,17 +6,24 @@ on:
 
 jobs:
 
-  build:
+  build_and_scan:
+    name: Build and Scan
 
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout Repo
+      uses: actions/checkout@v2
+
+    - name: Set the Docker image tag
+      id: tag
+      run: echo ::set-output name=IMAGE_TAG::$(cat version.txt)
+
     - name: Build the Docker image
       run: |
         docker build \
           --file Dockerfile \
-          --tag           ado.pwsh.agent:$(cat version.txt) \
+          --tag           ado.pwsh.agent:${{ steps.tag.outputs.IMAGE_TAG }} \
           --build-arg     FROM_TAG=7.1.4-ubuntu-20.04 \
           --build-arg     PWSH_CORE_REPO=mcr.microsoft.com/powershell \
           --build-arg     PESTER_VERSION=5.3.0 \
@@ -27,4 +34,4 @@ jobs:
     - name: Scan the Docker image
       uses: Azure/container-scan@v0
       with:
-        image-name: ado.pwsh.agent:7.1.4
+        image-name: ado.pwsh.agent:${{ steps.tag.outputs.IMAGE_TAG }}
