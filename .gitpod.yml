@@ -1,0 +1,14 @@
+image:
+  file: .gitpod.dockerfile
+
+vscode:
+  extensions:
+    - docsmsft.docs-markdown
+    - doggy8088.netcore-editorconfiggenerator
+    - github.vscode-pull-request-github
+    - mhutchie.git-graph
+    - ms-azuretools.vscode-docker
+    - ms-vscode.azure-account
+    - vscode-icons-team.vscode-icons
+
+workspaceLocation: "ses-k8s-azure-cluster"

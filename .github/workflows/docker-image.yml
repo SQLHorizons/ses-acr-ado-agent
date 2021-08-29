@@ -1,0 +1,25 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ imagebuild ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: |
+        docker build \
+          --file Dockerfile \
+          --tag           ado.pwsh.agent:$(cat version.txt) \
+          --build-arg     FROM_TAG=7.1.4-ubuntu-20.04 \
+          --build-arg     PWSH_CORE_REPO=mcr.microsoft.com/powershell \
+          --build-arg     PESTER_VERSION=5.3.0 \
+          --build-arg     ANALYZER_VERSION=1.20.0 \
+          --build-arg     AZP_AGENT_VERSION=2.191.1 \
+          --no-cache .

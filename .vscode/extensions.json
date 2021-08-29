@@ -1,0 +1,8 @@
+{
+    "recommendations": [
+        "editorconfig.editorconfig",
+        "pkief.material-icon-theme",
+        "ms-vscode.powershell",
+        "davidanson.vscode-markdownlint",
+    ]
+}
