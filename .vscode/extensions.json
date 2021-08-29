@@ -4,5 +4,6 @@
         "pkief.material-icon-theme",
         "ms-vscode.powershell",
         "davidanson.vscode-markdownlint",
+        "mhutchie.git-graph"
     ]
 }
