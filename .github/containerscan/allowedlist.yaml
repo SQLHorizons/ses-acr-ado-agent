@@ -10,8 +10,6 @@ general:
 
   bestPracticeViolations:
     - DKL-DI-0005
-    - CIS-DI-0001
     - DKL-DI-0003
-    - CIS-DI-0005
     - CIS-DI-0006
     - CIS-DI-0008

@@ -16,7 +16,9 @@ ENV AZP_POOL=Default \
 
 # To make it easier for build and release pipelines to run apt-get,
 # configure apt to not require confirmation (assume the -y argument by default)
-RUN echo "APT::Get::Assume-Yes \"true\";" > /etc/apt/apt.conf.d/90assumeyes
+RUN export DOCKER_CONTENT_TRUST=1 && \
+  echo "APT::Get::Assume-Yes \"true\";" > /etc/apt/apt.conf.d/90assumeyes && \
+  groupadd -rg 1050 adoagent && useradd -rms /bin/bash -u 1050 -g adoagent adoagent
 
 SHELL ["pwsh", "-command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
@@ -45,6 +47,9 @@ RUN apt-get update && \
 WORKDIR /azp
 
 COPY ./scripts/start-docker.sh .
-RUN chmod +x start-docker.sh
+RUN chmod +x start-docker.sh && \
+  chown -Rv adoagent:adoagent start-docker.sh
+
+USER adoagent
 
 CMD ["/azp/start-docker.sh"]
